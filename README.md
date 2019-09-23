@@ -5,3 +5,5 @@ An app integrated with Google Maps to position yourself and find routes.
 
 <img src="Screenshots/ic_logo_round.png" width="400" height="400"/>
 
+
+### Thanks for using my App!
