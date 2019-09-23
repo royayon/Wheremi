@@ -5,10 +5,13 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.PermissionRequest;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
@@ -56,6 +59,9 @@ public class MapsActivity extends FragmentActivity  /*extends AppCompatActivity*
 
                 showMap(src,dest,"driving");
 
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+
             }
         });
         showMap("MIST","MIST","driving");
@@ -69,9 +75,17 @@ public class MapsActivity extends FragmentActivity  /*extends AppCompatActivity*
         webSettings.setAppCacheEnabled(true);
         //mapView.loadUrl("http://maps.google.com/maps?saddr=osmany hall&daddr=mist");
         mapView.loadUrl("https://directionsdebug.firebaseapp.com/embed.html?origin=" + src + "&destination=" + dest + "&mode=" + mode);
+        //mapView.loadUrl("https://directionsdebug.firebaseapp.com/?origin=" + src + "&destination=" + dest + "&mode=" + mode + "&alternatives=true&region=BD");
         mapView.setWebViewClient(new WebViewClient(){
             /*public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
                 mapView.loadUrl("https://directionsdebug.firebaseapp.com/embed.html?origin=osmany%20hall&destination=chashara&mode=driving&region=BD");
+            }*/
+            /*@Override
+            public void onPageFinished(WebView view, String url)
+            {
+                mapView.loadUrl("javascript:(function() { " +
+                        "document.querySelector('a.google-maps-link').style.display='none'; " +
+                        "})()");
             }*/
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
